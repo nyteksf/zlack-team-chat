@@ -12,7 +12,10 @@ export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
   if (!isPublicPage(request) && !isAuthenticated) {
     return nextjsMiddlewareRedirect(request, "/auth");
   }
-  //ToDo: Redirect user away from "/auth" when authenticated
+
+  if (isPublicPage(request) && isAuthenticated) {
+    return nextjsMiddlewareRedirect(request, "/");
+  }
 });
 
 export const config = {

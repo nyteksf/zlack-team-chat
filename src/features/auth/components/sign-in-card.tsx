@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { TriangleAlert, Eye, EyeOff } from "lucide-react";
 
 import {
   Card,
@@ -23,11 +24,55 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
   const { signIn } = useAuthActions();
 
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  const [pending, setPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  // NEW: State for password reset flow
+  const [passwordResetSent, setPasswordResetSent] = useState(false);
 
-  const handleProviderSignIn = (value: "github" | "google") => {
-    signIn(value);
+  const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setPending(true);
+    signIn("password", { email, password, flow: "signIn" })
+      .catch(() => {
+        setError("Invalid email or password.");
+      })
+      .finally(() => {
+        setPending(false);
+      });
   };
+
+  const onProviderSignIn = (value: "github" | "google") => {
+    setPending(true);
+    signIn(value).finally(() => {
+      setPending(false);
+    });
+  };
+
+  {
+    /*
+  const handlePasswordReset = async () => {
+    if (!email) {
+      setError("Please enter your email address first.");
+      return;
+    }
+
+    setPending(true);
+    setError("");
+
+    try {
+      await reset(email);
+      setPasswordResetSent(true);
+    } catch (err) {
+      // @ts-ignore
+      setError(err.message || "Failed to send password reset email.");
+    } finally {
+      setPending(false);
+    }
+  }; */
+  }
 
   return (
     <Card className="w-full h-full p-8">
@@ -37,25 +82,64 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           Use your email or another service to continue
         </CardDescription>
       </CardHeader>
+      {!!error && (
+        <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
+          <TriangleAlert className="size-4" />
+          <p>{error}</p>
+        </div>
+      )}
+      {/* NEW: Password reset confirmation message */}
+      {passwordResetSent && (
+        <div className="bg-green-500/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-green-700 mb-6">
+          <p>Password reset email sent. Check your inbox.</p>
+        </div>
+      )}
       <CardContent className="space-y-5 px-0 pb-0">
-        <form className="space-y-2.5">
+        <form onSubmit={onPasswordSignIn} className="space-y-2.5">
           <Input
-            disabled={false}
+            disabled={pending}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             type="email"
             required
           />
-          <Input
-            disabled={false}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            type="password"
-            required
-          />
-          <Button type="submit" className="w-full" size="lg" disabled={false}>
+          <div className="relative">
+            <Input
+              disabled={pending}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              type={showPassword ? "text" : "password"}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground right-2.5"
+            >
+              {showPassword ? (
+                <EyeOff className="size-4" />
+              ) : (
+                <Eye className="size-4" />
+              )}
+            </button>
+          </div>
+          {/* ToDO: NEW: Forgot Password link & modal to enter code/validate:
+          See docs: https://labs.convex.dev/auth/config/passwords
+          <div className="flex justify-end">
+            <Button
+              type="button"
+              variant="link"
+              size="sm"
+              disabled={pending}
+              onClick={handlePasswordReset}
+              className="text-xs text-muted-foreground hover:text-foreground"
+            >
+              Forgot Password?
+            </Button>
+          </div>*/}
+          <Button type="submit" className="w-full" size="lg" disabled={pending}>
             Continue
           </Button>
         </form>
@@ -63,8 +147,8 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         <div className="flex flex-col gap-y-2.5">
           <Button
             type="button"
-            disabled={false}
-            onClick={() => {}}
+            disabled={pending}
+            onClick={() => onProviderSignIn("google")}
             variant="outline"
             size="lg"
             className="w-full relative"
@@ -74,8 +158,8 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           </Button>
           <Button
             type="button"
-            disabled={false}
-            onClick={() => handleProviderSignIn("github")}
+            disabled={pending}
+            onClick={() => onProviderSignIn("github")}
             variant="outline"
             size="lg"
             className="w-full relative"
