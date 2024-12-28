@@ -30,6 +30,8 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
   const [showPassword, setShowPassword] = useState(false);
   // NEW: State for password reset flow
   const [passwordResetSent, setPasswordResetSent] = useState(false);
+  // CHANGE: Add state for password reset flow
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
 
   const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,29 +53,6 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
     });
   };
 
-  {
-    /*
-  const handlePasswordReset = async () => {
-    if (!email) {
-      setError("Please enter your email address first.");
-      return;
-    }
-
-    setPending(true);
-    setError("");
-
-    try {
-      await reset(email);
-      setPasswordResetSent(true);
-    } catch (err) {
-      // @ts-ignore
-      setError(err.message || "Failed to send password reset email.");
-    } finally {
-      setPending(false);
-    }
-  }; */
-  }
-
   return (
     <Card className="w-full h-full p-8">
       <CardHeader className="px-0 pt-0">
@@ -88,12 +67,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           <p>{error}</p>
         </div>
       )}
-      {/* NEW: Password reset confirmation message */}
-      {passwordResetSent && (
-        <div className="bg-green-500/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-green-700 mb-6">
-          <p>Password reset email sent. Check your inbox.</p>
-        </div>
-      )}
+     
       <CardContent className="space-y-5 px-0 pb-0">
         <form onSubmit={onPasswordSignIn} className="space-y-2.5">
           <Input
@@ -125,20 +99,6 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
               )}
             </button>
           </div>
-          {/* ToDO: NEW: Forgot Password link & modal to enter code/validate:
-          See docs: https://labs.convex.dev/auth/config/passwords
-          <div className="flex justify-end">
-            <Button
-              type="button"
-              variant="link"
-              size="sm"
-              disabled={pending}
-              onClick={handlePasswordReset}
-              className="text-xs text-muted-foreground hover:text-foreground"
-            >
-              Forgot Password?
-            </Button>
-          </div>*/}
           <Button type="submit" className="w-full" size="lg" disabled={pending}>
             Continue
           </Button>

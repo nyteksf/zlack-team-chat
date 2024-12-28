@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { ConvexClientProvider } from "@/components/convex-client-provider";
+import { Modals } from "@/components/modals";
+import { Toaster } from "@/components/ui/sonner";
+import { JotaiProvider } from "@/components/jotai-provider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 
-import "./globals.css";
+import "@/app/globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,7 +36,13 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ConvexClientProvider>{children}</ConvexClientProvider>
+          <ConvexClientProvider>
+            <JotaiProvider>
+              <Toaster />
+              <Modals />
+              {children}
+            </JotaiProvider>
+          </ConvexClientProvider>
         </body>
       </html>
     </ConvexAuthNextjsServerProvider>
