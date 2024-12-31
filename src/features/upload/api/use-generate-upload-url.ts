@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Doc } from "@convex-dev/auth/server";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
-// import { useCreateWorkspaceModal } from "./../store/use-create-workspace-modal";
+import { useCreateWorkspaceModal } from "./../store/use-create-workspace-modal";
 
 type ResponseType = string | null;
 
@@ -18,7 +18,9 @@ type Options = {
 export const useGenerateUploadUrl = () => {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
-  const [status, setStatus] = useState<"success" | "error" | "pending" | "settled" | null>(null);
+  const [status, setStatus] = useState<
+    "success" | "error" | "pending" | "settled" | null
+  >(null);
 
   const isPending = useMemo(() => status === "pending", [status]);
   const isSuccess = useMemo(() => status === "success", [status]);
@@ -30,7 +32,7 @@ export const useGenerateUploadUrl = () => {
   const mutate = useCallback(
     async (_values: {}, options?: Options) => {
       try {
-        // RESET APP STATE
+         RESET APP STATE
         setData(null);
         setError(null);
         setStatus("pending");
@@ -39,7 +41,7 @@ export const useGenerateUploadUrl = () => {
         options?.onSuccess?.(response);
 
         return response;
-      } catch(error) {
+      } catch (error) {
         setStatus("error");
         options?.onError?.(error as Error);
         if (options?.throwError) {
@@ -60,6 +62,6 @@ export const useGenerateUploadUrl = () => {
     isPending,
     isSuccess,
     isError,
-    isSettled
+    isSettled,
   };
 };

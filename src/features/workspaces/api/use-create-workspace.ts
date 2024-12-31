@@ -20,12 +20,6 @@ export const useCreateWorkspace = () => {
   const [data, setData] = useState<ResponseType>(null);
   const [error, setError] = useState<Error | null>(null);
   const [status, setStatus] = useState<"success" | "error" | "pending" | "settled" | null>(null);
-  
-  //const [isError, setIsError] = useState(false);
-  //const [isPending, setIsPending] = useState(false);
-  //const [isSuccess, setIsSuccess] = useState(false);
-  //const [isSettled, setIsSettled] = useState(false);
-  // 02:31:25 replay point
 
   const isPending = useMemo(() => status === "pending", [status]);
   const isSuccess = useMemo(() => status === "success", [status]);

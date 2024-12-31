@@ -58,7 +58,8 @@ export const MessageList = ({
         groups[dateKey] = [];
       }
       groups[dateKey].unshift(message);
-      return groups; // Added missing return statement
+
+      return groups;
     },
     {} as Record<string, typeof data>
   );

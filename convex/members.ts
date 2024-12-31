@@ -114,5 +114,3 @@ export const currentMember = query({
     return member;
   },
 });
-
-// timestamp 03:50:25

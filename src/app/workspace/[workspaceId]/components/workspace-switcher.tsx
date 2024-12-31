@@ -80,5 +80,3 @@ export const WorkspaceSwitcher = () => {
     </DropdownMenu>
   );
 };
-
-// timestamp 03:20:57

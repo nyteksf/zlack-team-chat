@@ -30,4 +30,3 @@ export default function Home() {
     </div>
   );
 }
-// timestamp 01:59:31.

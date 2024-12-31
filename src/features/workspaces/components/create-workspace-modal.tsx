@@ -37,7 +37,7 @@ export const CreateWorkspaceModal = () => {
         onSuccess(id) {
           toast.success("Workspace created successfully.");
           router.push(`/workspace/${id}`);
-          handleClose(); // 02:44:19 timestamp
+          handleClose();
         },
       }
     );

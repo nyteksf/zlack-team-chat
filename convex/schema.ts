@@ -59,5 +59,3 @@ const schema = defineSchema({
 });
 
 export default schema;
-
-// timestamp 5:05:17

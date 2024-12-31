@@ -103,5 +103,3 @@ export const WorkspaceSidebar = () => {
     </div>
   );
 };
-
-// timestamp 05:13:16

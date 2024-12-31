@@ -56,7 +56,7 @@ const Header = ({ title }: HeaderProps) => {
     if (currentMember?.role !== "admin") return;
 
     if (isOpen) {
-      setChannelName(title); // Populate with the current title
+      setChannelName(title);
     }
     setEditOpen(isOpen);
   };

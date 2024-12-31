@@ -28,4 +28,3 @@ export const Sidebar = () => {
     </aside>
   );
 };
-// timestamp 03:39:23
