@@ -1,15 +1,20 @@
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
-import { format, isToday, isYesterday } from "date-fns";
 
-import { cn } from "@/lib/utils";
-import { useConfirmModal } from "@/hooks/use-confirm-modal";
+import { format, isToday, isYesterday } from "date-fns";
 import { useRemoveMessage } from "@/features/messages/api/use-remove-message";
 import { useUpdateMessage } from "@/features/messages/api/use-update-message";
+
+import { cn } from "@/lib/utils";
+import { usePanel } from "@/hooks/use-panel";
+import { useConfirmModal } from "@/hooks/use-confirm-modal";
 
 import { Hint } from "@/components/hint";
 import { Toolbar } from "@/components/toolbar";
 import { Thumbnail } from "@/components/thumbnail";
+import { ThreadBar } from "@/components/thread-bar";
+import { ReactionsBar } from "@/components/reactions-bar";
+import { useToggleReaction } from "@/features/reactions/api/use-toggle-reaction";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 import { Doc, Id } from "../../convex/_generated/dataModel";
@@ -38,6 +43,7 @@ interface MessageProps {
   isCompact?: boolean;
   threadCount?: number;
   threadImage?: string;
+  threadName?: string;
   threadTimestamp?: number;
   hideThreadButton?: boolean;
 }
@@ -63,8 +69,11 @@ export const Message = ({
   hideThreadButton,
   threadCount,
   threadImage,
+  threadName,
   threadTimestamp,
 }: MessageProps) => {
+  const { parentMessageId, onOpenMessage, onClose } = usePanel();
+
   const [ConfirmDialog, confirm] = useConfirmModal(
     "Permanently Delete Message",
     "This message will be permanently removed from the conversation and cannot be recovered. Are you sure you want to proceed?"
@@ -74,8 +83,21 @@ export const Message = ({
     useUpdateMessage();
   const { mutate: removeMessage, isPending: isRemovingMessage } =
     useRemoveMessage();
+  const { mutate: toggleReaction, isPending: isTogglingReaction } =
+    useToggleReaction();
 
   const isPending = isUpdatingMessage;
+
+  const handleReaction = (value: string) => {
+    toggleReaction(
+      { messageId: id, value },
+      {
+        onError: () => {
+          toast.error("Failed to toggle reaction");
+        },
+      }
+    );
+  };
 
   const handleRemove = async () => {
     const okay = await confirm();
@@ -89,7 +111,10 @@ export const Message = ({
           onSuccess: () => {
             toast.success("Message successfully deleted");
 
-            // ToDo: CLOSE CUR THREAD IF THREAD OF SAME MSG IS OPENED AS IT WAS JUST DELETED
+            // IF CURTHREAD OPEN ON REMOVE, CLOSE IT
+            if (parentMessageId === id) {
+              onClose();
+            }
           },
           onError: () => {
             toast.error(
@@ -126,7 +151,7 @@ export const Message = ({
             "transform transition-all",
             isEditing && "bg-[#F2C74433] hover:bg-[#F2C74433]",
             isRemovingMessage &&
-              "bg-rose-500/50 transform transition-all scale-y-0 opacity-0 origin-bottom"
+              "bg-rose-500/65 transform transition-all scale-y-0 opacity-0 origin-bottom duration-200"
           )}
         >
           <div className="flex items-start gap-2">
@@ -154,6 +179,14 @@ export const Message = ({
                     (edited)
                   </span>
                 ) : null}
+                <ReactionsBar data={reactions} onChange={handleReaction} />
+                <ThreadBar
+                  count={threadCount}
+                  image={threadImage}
+                  name={threadName}
+                  timestamp={threadTimestamp}
+                  onClick={() => onOpenMessage(id)}
+                />
               </div>
             )}
           </div>
@@ -162,9 +195,9 @@ export const Message = ({
               isAuthor={isAuthor}
               isPending={false}
               handleEdit={() => setEditingId(id)}
-              handleThread={() => {}}
+              handleThread={() => onOpenMessage(id)}
               handleDelete={handleRemove}
-              handleReaction={() => {}}
+              handleReaction={handleReaction}
               hideThreadButton={hideThreadButton}
             />
           )}
@@ -184,7 +217,7 @@ export const Message = ({
           "transform transition-all",
           isEditing && "bg-[#F2C74433] hover:bg-[#F2C74433]",
           isRemovingMessage &&
-            "bg-rose-500/50 transform transition-all scale-y-0 opacity-0 origin-bottom"
+            "bg-rose-500/65 transform transition-all scale-y-0 opacity-0 origin-bottom duration-200"
         )}
       >
         <div className="flex items-start gap-2">
@@ -225,6 +258,14 @@ export const Message = ({
               {updatedAt ? (
                 <span className="text-xs text-muted-foreground">(edited)</span>
               ) : null}
+              <ReactionsBar data={reactions} onChange={handleReaction} />
+              <ThreadBar
+                  count={threadCount}
+                  image={threadImage}
+                  name={threadName}
+                  timestamp={threadTimestamp}
+                  onClick={() => onOpenMessage(id)}
+                />
             </div>
           )}
         </div>
@@ -233,9 +274,9 @@ export const Message = ({
             isAuthor={isAuthor}
             isPending={isPending}
             handleEdit={() => setEditingId(id)}
-            handleThread={() => {}}
+            handleThread={() => onOpenMessage(id)}
             handleDelete={handleRemove}
-            handleReaction={() => {}}
+            handleReaction={handleReaction}
             hideThreadButton={hideThreadButton}
           />
         )}
