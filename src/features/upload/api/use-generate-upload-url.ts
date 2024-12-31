@@ -32,7 +32,7 @@ export const useGenerateUploadUrl = () => {
   const mutate = useCallback(
     async (_values: {}, options?: Options) => {
       try {
-         RESET APP STATE
+        // RESET APP STATE
         setData(null);
         setError(null);
         setStatus("pending");
