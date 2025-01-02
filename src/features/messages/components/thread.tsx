@@ -270,8 +270,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
           id={message._id}
           reactions={message.reactions}
           isEditing={editingId === message._id}
-          // eslint-disable-next-line
-          threadName={message.threadName}
+          threadName={(message as unknown as { threadName: string }).threadName}
           setEditingId={setEditingId}
         />
       </div>
