@@ -75,7 +75,7 @@ export const WorkspaceSidebar = () => {
         label="Channels"
         hint="New channel"
         onNew={() => {
-          member.role === "admin" ? setOpen(true) : undefined
+          member.role === "admin" ? () => setOpen(true) : undefined;
         }}
       >
         {channels?.map((item) => (

@@ -63,6 +63,7 @@ export const InviteModal = ({
       })
       .catch((err) => {
         toast.error("Failed to copy invite link");
+        console.log(err);
       });
   };
 
