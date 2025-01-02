@@ -23,7 +23,6 @@ import {
   DialogHeader,
   DialogContent,
   DialogTrigger,
-  DialogDescription,
 } from "@/components/ui/dialog";
 
 interface HeaderProps {
@@ -46,7 +45,6 @@ const Header = ({ title }: HeaderProps) => {
     "You are about to permanently delete this channel from your workspace. This action is irreversible."
   );
 
-  const { data: member } = useCurrentUser();
   const { mutate: updateChannel, isPending: isUpdatingChannel } =
     useUpdateChannel();
   const { mutate: removeChannel, isPending: isRemovingChannel } =

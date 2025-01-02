@@ -13,7 +13,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 interface InviteModalProps {
@@ -35,7 +34,7 @@ export const InviteModal = ({
     "Creating a new invite code will deactivate the current one. Only members with the new code can join the workspace."
   );
 
-  const { mutate, isPending } = useNewJoinCode();
+  const { mutate, _isPending } = useNewJoinCode();
 
   const handleNewCode = async () => {
     const okay = await confirm();
