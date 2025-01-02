@@ -56,7 +56,7 @@ export const Toolbar = () => {
         </Button>
 
         <CommandDialog open={open} onOpenChange={setOpen}>
-          <CommandInput placeholder="Find a channel or username..." />
+          <CommandInput placeholder="Search by channel or username..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup heading="Channels">
