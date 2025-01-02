@@ -28,10 +28,6 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  // NEW: State for password reset flow
-  const [passwordResetSent, setPasswordResetSent] = useState(false);
-  // CHANGE: Add state for password reset flow
-  const [isPasswordReset, setIsPasswordReset] = useState(false);
 
   const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

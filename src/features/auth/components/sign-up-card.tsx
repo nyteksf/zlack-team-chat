@@ -55,6 +55,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
     })
       .catch((error) => {
         setError("Failed to sign up. Please try again.");
+        console.log(error);
       })
       .finally(() => {
         setPending(false);

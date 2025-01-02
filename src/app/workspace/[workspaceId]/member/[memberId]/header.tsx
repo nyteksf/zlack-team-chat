@@ -1,19 +1,5 @@
-import { toast } from "sonner";
-import { useState } from "react";
-import { TrashIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { FaChevronDown } from "react-icons/fa";
 
-import { useChannelId } from "@/hooks/use-channel-id";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { useConfirmModal } from "@/hooks/use-confirm-modal";
-
-import { useCurrentUser } from "@/features/auth/api/use-current-user";
-import { useCurrentMember } from "@/features/members/api/use-current-member";
-import { useUpdateChannel } from "@/features/channels/api/use-update-channel";
-import { useRemoveChannel } from "@/features/channels/api/use-remove-channel";
-
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

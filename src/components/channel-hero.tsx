@@ -14,7 +14,7 @@ export const ChannelHero = ({ name, creationTime }: ChannelHeroProps) => {
         Created on {format(creationTime, "MMMM do, yyyy")}.
       </p>
       <p className="text-sm text-slate-600">
-        This is where your team's conversations will live. Share messages,
+        This is where your team&apos;s conversations will live. Share messages,
         files, and collaborate together in this space.
       </p>
     </div>
