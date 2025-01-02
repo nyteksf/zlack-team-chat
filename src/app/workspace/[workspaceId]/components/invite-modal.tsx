@@ -34,7 +34,7 @@ export const InviteModal = ({
     "Creating a new invite code will deactivate the current one. Only members with the new code can join the workspace."
   );
 
-  const { mutate, _isPending } = useNewJoinCode();
+  const { mutate } = useNewJoinCode();
 
   const handleNewCode = async () => {
     const okay = await confirm();

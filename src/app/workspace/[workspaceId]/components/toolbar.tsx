@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 import { Info, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -10,7 +9,6 @@ import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 
 import { Button } from "@/components/ui/button";
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -18,7 +16,6 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 
 import { Id } from "../../../../../convex/_generated/dataModel";
@@ -59,12 +56,15 @@ export const Toolbar = () => {
         </Button>
 
         <CommandDialog open={open} onOpenChange={setOpen}>
-          <CommandInput placeholder="Search for a channel or username..." />
+          <CommandInput placeholder="Find a channel or username..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup heading="Channels">
               {channels?.map((channel) => (
-                <CommandItem onSelect={() => onChannelClick(channel._id)}>
+                <CommandItem
+                  key={channel._id}
+                  onSelect={() => onChannelClick(channel._id)}
+                >
                   {channel.name}
                 </CommandItem>
               ))}
@@ -72,7 +72,10 @@ export const Toolbar = () => {
             <CommandSeparator />
             <CommandGroup heading="Members">
               {members?.map((member) => (
-                <CommandItem onSelect={() => onMemberClick(member._id)}>
+                <CommandItem
+                  key={member._id}
+                  onSelect={() => onMemberClick(member._id)}
+                >
                   {member.user.name}
                 </CommandItem>
               ))}
