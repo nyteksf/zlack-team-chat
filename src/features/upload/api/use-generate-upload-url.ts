@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { api } from "../../../../convex/_generated/api";
 
 type Options = {
+  // eslint-disable-next-line 
   onSuccess?: (data: any) => void;
   onError?: (error: Error) => void;
   onSettled?: () => void;
@@ -11,6 +12,7 @@ type Options = {
 };
 
 export const useGenerateUploadUrl = () => {
+  // eslint-disable-next-line 
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
   const [status, setStatus] = useState<
