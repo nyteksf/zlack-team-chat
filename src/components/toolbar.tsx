@@ -28,7 +28,7 @@ export const Toolbar = ({
       <div className="opacity-0 group-hover:opacity-100 border bg-white rounded-md shadow-sm transform hover:scale-105 transition-all flex flex-row">
         <EmojiPopover
           hint="Add reaction"
-          onEmojiSelect={(emoji) => handleReaction(emoji.native)}
+          onEmojiSelect={(emoji) => handleReaction(emoji)}
         >
           <Button
             className="hover:translate-x-[-4] hover:translate-y-[4] transition-all"

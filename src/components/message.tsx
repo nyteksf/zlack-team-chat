@@ -221,7 +221,7 @@ export const Message = ({
         )}
       >
         <div className="flex items-start gap-2">
-          <button onClick={() => onOpenprofile(memberId)}>
+          <button onClick={() => onOpenProfile(memberId)}>
             <Avatar>
               <AvatarImage src={authorImage} />
               <AvatarFallback>{avatarFallback}</AvatarFallback>
@@ -260,12 +260,12 @@ export const Message = ({
               ) : null}
               <ReactionsBar data={reactions} onChange={handleReaction} />
               <ThreadBar
-                  count={threadCount}
-                  image={threadImage}
-                  name={threadName}
-                  timestamp={threadTimestamp}
-                  onClick={() => onOpenMessage(id)}
-                />
+                count={threadCount}
+                image={threadImage}
+                name={threadName}
+                timestamp={threadTimestamp}
+                onClick={() => onOpenMessage(id)}
+              />
             </div>
           )}
         </div>

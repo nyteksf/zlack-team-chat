@@ -31,7 +31,18 @@ export const remove = mutation({
       throw new Error("Unauthorized action prohibited.");
     }
 
-    // ToDo: REMOVE ASSOCIATED CHANNEL MESSAGES
+    // FETCH MESSAGES OF RELEVANCE
+    const [messages] = await Promise.all([
+      ctx.db
+        .query("messages")
+        .withIndex("by_channel_id", (q) => q.eq("channelId", args.id))
+        .collect(),
+    ]);
+
+    // DELETE AFOREMENTIONED MESSAGES
+    for (const message of messages) {
+      await ctx.db.delete(message._id)
+    }
 
     await ctx.db.delete(args.id);
 
@@ -174,46 +185,3 @@ export const get = query({
     return channels;
   },
 });
-
-/*
-import { v } from "convex/values";
-
-import { auth } from "./auth";
-import { query } from "./_generated/server";
-
-export const get = query({
-  args: {
-    workspaceId: v.id("workspaces"),
-  },
-  handler: async (ctx, args) => {
-    const userId = await auth.getSessionId(ctx);
-
-    if (!userId) {
-      return [];
-    }
-
-    const member = await ctx.db
-      .query("members")
-      .withIndex("by_workspace_id_user_id", (q) =>
-        q.eq("workspaceId", args.workspaceId).eq("userId", userId)
-      )
-      .unique();
-
-    if (!member) {
-      return [];
-    }
-
-    const channels = await ctx.db
-      .query("channels")
-      .withIndex("by_workspace_id", (q) =>
-        q.eq("workspaceId", args.workspaceId)
-      )
-      .collect();
-
-    console.log("Raw channels query result:", channels);
-
-    return channels;
-  },
-});
-
-*/
