@@ -1,10 +1,8 @@
 import { useMutation } from "convex/react";
 import { useCallback, useMemo, useState } from "react";
 
-import { Doc } from "@convex-dev/auth/server";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
-import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal";
 
 type RequestType = { id: Id<"workspaces">, name: string };
 type ResponseType = Id<"workspaces"> | null;

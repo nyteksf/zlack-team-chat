@@ -1,12 +1,7 @@
 import { useMutation } from "convex/react";
 import { useCallback, useMemo, useState } from "react";
 
-import { Doc } from "@convex-dev/auth/server";
 import { api } from "../../../../convex/_generated/api";
-import { Id } from "../../../../convex/_generated/dataModel";
-import { useCreateWorkspaceModal } from "./../store/use-create-workspace-modal";
-
-type ResponseType = string | null;
 
 type Options = {
   onSuccess?: (data: any) => void;
@@ -30,6 +25,7 @@ export const useGenerateUploadUrl = () => {
   const mutation = useMutation(api.upload.generateUploadUrl);
 
   const mutate = useCallback(
+    // eslint-disable-next-line 
     async (_values: {}, options?: Options) => {
       try {
         // RESET APP STATE
