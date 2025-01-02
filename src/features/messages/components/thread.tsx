@@ -2,11 +2,7 @@ import Quill from "quill";
 import { toast } from "sonner";
 import { useRef, useState } from "react";
 import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
-import {
-  AlertTriangle,
-  Loader,
-  XIcon,
-} from "lucide-react";
+import { AlertTriangle, Loader, XIcon } from "lucide-react";
 
 import dynamic from "next/dynamic";
 
@@ -65,9 +61,9 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
   const { data: currentMember } = useCurrentMember({ workspaceId });
   const { data: message, isLoading: loadingMessage } = useGetMessage({
     id: messageId,
-  }); 
+  });
 
-  console.log("message: ", message)
+  console.log("message: ", message);
   const { results, status, loadMore } = useGetMessages({
     channelId,
     parentMessageId: messageId,
@@ -274,6 +270,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
           id={message._id}
           reactions={message.reactions}
           isEditing={editingId === message._id}
+          // eslint-disable-next-line
           threadName={message.threadName}
           setEditingId={setEditingId}
         />
