@@ -62,8 +62,10 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
     id: memberId,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { mutate: updateMember, isPending: isUpdatingMember } =
     useUpdateMember();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { mutate: removeMember, isPending: isRemovingMember } =
     useRemoveMember();
 

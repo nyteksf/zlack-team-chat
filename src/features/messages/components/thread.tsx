@@ -5,7 +5,6 @@ import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
 import {
   AlertTriangle,
   Loader,
-  LucideMessageCircleCode,
   XIcon,
 } from "lucide-react";
 
@@ -123,6 +122,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
       setEditorKey((prevKey) => prevKey + 1);
     } catch (error) {
       toast.error("Message failed to send");
+      console.log(error);
     } finally {
       setIsPending(false);
       editorRef?.current?.enable(true);

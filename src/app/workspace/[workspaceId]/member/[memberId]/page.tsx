@@ -32,6 +32,7 @@ const MemberIdPage = () => {
         },
         onError(error) {
           toast.error("Failed to get or create conversation");
+          console.log(error);
         },
       }
     );
