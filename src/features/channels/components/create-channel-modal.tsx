@@ -32,6 +32,7 @@ export const CreateChannelModal = () => {
     setOpen(false);
   };
 
+  /*
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -40,6 +41,7 @@ export const CreateChannelModal = () => {
       }
     }
   };
+  */
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s+/g, "-").toLowerCase();

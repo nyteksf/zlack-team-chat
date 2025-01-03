@@ -38,6 +38,21 @@ const JoinPage = () => {
     setVerificationValue(newValue);
   };
 
+  const handleComplete = (value: string) => {
+    mutate(
+      { workspaceId, joinCode: value },
+      {
+        onSuccess: (id) => {
+          toast.success("Workspace joined");
+          router.replace(`/workspace/${id}`);
+        },
+        onError: () => {
+          toast.error("Failed to join workspace.");
+        },
+      }
+    );
+  };
+
   useEffect(() => {
     if (extractedQueryValue) {
       // POPULATE STATE WITH SEARCHPARAMS VALUE
@@ -59,21 +74,6 @@ const JoinPage = () => {
       router.push(`/workspace/${workspaceId}`);
     }
   }, [isMember, router, workspaceId]);
-
-  const handleComplete = (value: string) => {
-    mutate(
-      { workspaceId, joinCode: value },
-      {
-        onSuccess: (id) => {
-          toast.success("Workspace joined");
-          router.replace(`/workspace/${id}`);
-        },
-        onError: () => {
-          toast.error("Failed to join workspace.");
-        },
-      }
-    );
-  };
 
   if (isLoading) {
     return (

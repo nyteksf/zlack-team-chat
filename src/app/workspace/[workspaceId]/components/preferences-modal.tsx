@@ -33,7 +33,6 @@ export const PreferencesModal = ({
 }: PreferencesModalProps) => {
   const router = useRouter();
   const workspaceId = useWorkspaceId();
-  const [workspaceName, setWorkspaceName] = useState(initialValue);
   const [ConfirmDialog, confirm] = useConfirmModal(
     "Are you sure you want to continue?",
     "This action cannot be undone. Once deleted, your data will be permanently removed from our servers."
