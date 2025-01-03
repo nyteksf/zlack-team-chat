@@ -11,7 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -63,48 +65,52 @@ export const CreateChannelModal = () => {
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent>
-        <DialogHeader>
+      <DialogContent className="p-0 bg-gray-50 overflow-hidden rounded-xl">
+        <DialogHeader className="p-4 border-b bg-gray-100">
           <DialogTitle>Add a channel</DialogTitle>
+          <p className="text-sm text-gray-500 mt-1">
+            Channel names must be lowercase and without spaces
+          </p>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form className="p-4 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <Input
-              value={name}
-              disabled={isPending}
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-              required
-              autoFocus
-              minLength={3}
-              maxLength={80}
-              placeholder="e.g. Plan budget"
-              className="p-3 border-2 rounded-lg shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <p className="text-sm text-gray-500">
-              Please provide a unique name.
+            <label className="text-sm font-medium text-gray-700">
+              Channel name
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 select-none">
+                #
+              </span>
+              <Input
+                value={name}
+                onChange={handleChange}
+                disabled={isPending}
+                required
+                autoFocus
+                minLength={3}
+                maxLength={80}
+                placeholder="e.g. plan-budget"
+                className="pl-7 pr-3 h-10 border-gray-300"
+              />
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {name.length}/80 characters
             </p>
           </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex space-x-4">
+          <DialogFooter className="gap-x-2">
+            <DialogClose asChild>
               <Button
-                disabled={isPending}
                 variant="outline"
+                disabled={isPending}
                 onClick={handleClose}
-                className="text-gray-700 hover:bg-gray-200"
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                disabled={isPending || !name}
-                className="text-white focus:ring-4 focus:ring-blue-500 focus:outline-none"
-              >
-                {isPending ? "Creating..." : "Create"}
-              </Button>
-            </div>
-          </div>
+            </DialogClose>
+            <Button type="submit" disabled={isPending || !name.trim()}>
+              {isPending ? "Creating..." : "Create"}
+            </Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

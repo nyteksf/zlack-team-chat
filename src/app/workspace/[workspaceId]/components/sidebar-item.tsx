@@ -18,9 +18,9 @@ const sidebarItemVariants = cva(
       },
     },
     defaultVariants: {
-        variant: "default",
+      variant: "default",
     },
-  },
+  }
 );
 
 interface SidebarItemProps {
@@ -30,15 +30,24 @@ interface SidebarItemProps {
   variant?: VariantProps<typeof sidebarItemVariants>["variant"];
 }
 
-export const SidebarItem = ({ label, id, icon: Icon, variant, }: SidebarItemProps) => {
+export const SidebarItem = ({
+  label,
+  id,
+  icon: Icon,
+  variant,
+}: SidebarItemProps) => {
   const workspaceId = useWorkspaceId();
 
   return (
-    <Button 
-        variant="transparent" 
-        size="sm"
-        className={cn(sidebarItemVariants({ variant }))} 
-        asChild
+    <Button
+      variant="transparent"
+      size="sm"
+      className={cn(
+        sidebarItemVariants({ variant }),
+        label === "Threads" && "cursor-not-allowed",
+        label === "Drafts & Sent" && "cursor-not-allowed"
+      )}
+      asChild
     >
       <Link href={`/workspace/${workspaceId}/channel/${id}`}>
         <Icon className="size-3.5 mr-1 shrink-0" />

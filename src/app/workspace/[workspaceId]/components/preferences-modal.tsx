@@ -33,6 +33,7 @@ export const PreferencesModal = ({
 }: PreferencesModalProps) => {
   const router = useRouter();
   const workspaceId = useWorkspaceId();
+  const [workspaceName, setWorkspaceName] = useState(initialValue);
   const [ConfirmDialog, confirm] = useConfirmModal(
     "Are you sure you want to continue?",
     "This action cannot be undone. Once deleted, your data will be permanently removed from our servers."
@@ -45,6 +46,13 @@ export const PreferencesModal = ({
     useUpdateWorkspace();
   const { mutate: removeWorkspace, isPending: isRemovingWorkspace } =
     useRemoveWorkspace();
+
+  const handleEditOpenChange = (isOpen: boolean) => {
+    if (isOpen) {
+      setValue(initialValue);
+    }
+    setEditOpen(isOpen);
+  };
 
   const handleRemove = async () => {
     const isOkay = await confirm();
@@ -96,11 +104,11 @@ export const PreferencesModal = ({
             <DialogTitle>{initialValue}</DialogTitle>
           </DialogHeader>
           <div className="px-4 pb-4 flex flex-col gap-y-2">
-            <Dialog open={editOpen} onOpenChange={setEditOpen}>
+            <Dialog open={editOpen} onOpenChange={handleEditOpenChange}>
               <DialogTrigger>
                 <div
                   className="px-5 py-4 bg-gray-100 rounded-lg border cursor-pointer hover:bg-gray-50 hover:shadow-sm 
-  transition-all duration-150 ease-in-out"
+            transition-all duration-150 ease-in-out"
                 >
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold text-gray-800">
@@ -108,13 +116,13 @@ export const PreferencesModal = ({
                     </p>
                     <p
                       className="text-sm text-[#1264A3] font-semibold hover:underline 
-  transition-colors duration-150"
+                transition-colors duration-150"
                     >
                       Edit
                     </p>
                   </div>
                   <p className="text-sm text-gray-600 mt-1 text-left">
-                    {value}
+                    {initialValue}
                   </p>
                 </div>
               </DialogTrigger>
@@ -123,16 +131,25 @@ export const PreferencesModal = ({
                   <DialogTitle>Rename current workspace</DialogTitle>
                 </DialogHeader>
                 <form className="space-y-4" onSubmit={handleEdit}>
-                  <Input
-                    value={value}
-                    disabled={isUpdatingWorkspace}
-                    onChange={(e) => setValue(e.target.value)}
-                    required
-                    autoFocus
-                    minLength={3}
-                    maxLength={80}
-                    placeholder='Workspace name e.g. "Work", "Personal", "Home"'
-                  />
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700">
+                      Workspace name
+                    </label>
+                    <Input
+                      value={value}
+                      disabled={isUpdatingWorkspace}
+                      onChange={(e) => setValue(e.target.value)}
+                      required
+                      autoFocus
+                      minLength={3}
+                      maxLength={80}
+                      placeholder='Workspace name e.g. "Work", "Personal", "Home"'
+                      className="h-10 border-gray-300"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      {value.length}/80 characters
+                    </p>
+                  </div>
                   <DialogFooter>
                     <DialogClose asChild>
                       <Button
@@ -143,13 +160,21 @@ export const PreferencesModal = ({
                         Cancel
                       </Button>
                     </DialogClose>
-                    <Button type="submit" disabled={isUpdatingWorkspace}>
-                      Save
+                    <Button
+                      type="submit"
+                      disabled={
+                        !value.trim() ||
+                        isUpdatingWorkspace ||
+                        value === initialValue
+                      }
+                    >
+                      {isUpdatingWorkspace ? "Saving..." : "Save"}
                     </Button>
                   </DialogFooter>
                 </form>
               </DialogContent>
             </Dialog>
+
             <button
               disabled={isRemovingWorkspace}
               onClick={handleRemove}

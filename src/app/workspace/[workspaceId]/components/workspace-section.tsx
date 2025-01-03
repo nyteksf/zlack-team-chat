@@ -30,7 +30,6 @@ export const WorkspaceSection = ({
           onClick={toggle}
         >
           {" "}
-          {/* USED TO BE on, NOT !on: MAKES MORE SENSE TO ME */}
           <FaCaretDown
             className={cn("size-4 transition-transform", !on && "-rotate-90")}
           />
@@ -45,8 +44,11 @@ export const WorkspaceSection = ({
         {onNew && (
           <Hint label={hint} side="top" align="center">
             <Button
-              variant="transparent" // NOTE: ml-auto not working, had to use mr-auto on adjacent button to deal with likely override in button.tsx).
-              className="opacity-0 group-hover:opacity-100 transition-opacity justify-center p-0.5 text-sm text-[#F9EDFFCC] size-6 shrink-0"
+              variant="transparent"
+              className={cn(
+                "opacity-0 group-hover:opacity-100 transition-opacity justify-center p-0.5 text-sm text-[#F9EDFFCC] size-6 shrink-0",
+                label === "Direct Messages" && "cursor-not-allowed"
+              )}
               onClick={onNew}
             >
               <PlusIcon className="size-5" />
