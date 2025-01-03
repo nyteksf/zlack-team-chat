@@ -1,0 +1,49 @@
+{
+  "app\\workspace\\[workspaceId]\\channel\\[channelId]\\chat-input.tsx -> @/components/editor": {
+    "id": 2229,
+    "files": [
+      "static/css/b768cd3c08ab615c.css",
+      "static/chunks/f97e080b.901a053e24098a41.js",
+      "static/chunks/546.727f91a7bb51d192.js",
+      "static/chunks/145-4274337c89d3c318.js",
+      "static/chunks/637.8aff95bbea931841.js"
+    ]
+  },
+  "app\\workspace\\[workspaceId]\\member\\[memberId]\\chat-input.tsx -> @/components/editor": {
+    "id": 2229,
+    "files": [
+      "static/css/b768cd3c08ab615c.css",
+      "static/chunks/f97e080b.901a053e24098a41.js",
+      "static/chunks/546.727f91a7bb51d192.js",
+      "static/chunks/145-4274337c89d3c318.js",
+      "static/chunks/637.8aff95bbea931841.js"
+    ]
+  },
+  "components\\message.tsx -> @/components/editor": {
+    "id": 2229,
+    "files": [
+      "static/css/b768cd3c08ab615c.css",
+      "static/chunks/f97e080b.901a053e24098a41.js",
+      "static/chunks/546.727f91a7bb51d192.js",
+      "static/chunks/145-4274337c89d3c318.js",
+      "static/chunks/637.8aff95bbea931841.js"
+    ]
+  },
+  "components\\message.tsx -> @/components/renderer": {
+    "id": 6434,
+    "files": [
+      "static/chunks/546.727f91a7bb51d192.js",
+      "static/chunks/434.7f624a8d1b38548e.js"
+    ]
+  },
+  "features\\messages\\components\\thread.tsx -> @/components/editor": {
+    "id": 2229,
+    "files": [
+      "static/css/b768cd3c08ab615c.css",
+      "static/chunks/f97e080b.901a053e24098a41.js",
+      "static/chunks/546.727f91a7bb51d192.js",
+      "static/chunks/145-4274337c89d3c318.js",
+      "static/chunks/229.52ac7e14577dacf5.js"
+    ]
+  }
+}

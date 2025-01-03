@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/auth/page": "app/auth/page.js",
+  "/join/[workspaceId]/page": "app/join/[workspaceId]/page.js",
+  "/page": "app/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/workspace/[workspaceId]/channel/[channelId]/page": "app/workspace/[workspaceId]/channel/[channelId]/page.js",
+  "/workspace/[workspaceId]/member/[memberId]/page": "app/workspace/[workspaceId]/member/[memberId]/page.js",
+  "/workspace/[workspaceId]/page": "app/workspace/[workspaceId]/page.js"
+}
